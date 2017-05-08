@@ -38,8 +38,10 @@ def create_simulation_parameters(year=2006, start=None, end=None,
                                  emission_rate='daily',
                                  trading_calendar=None):
 
-    if not trading_calendar:
+    if trading_calendar is None:
         trading_calendar = get_calendar("NYSE")
+    else:
+        trading_calendar = get_calendar(trading_calendar)
 
     if start is None:
         start = pd.Timestamp("{0}-01-01".format(year), tz='UTC')
