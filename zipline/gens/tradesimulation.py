@@ -240,10 +240,12 @@ class AlgorithmSimulator(object):
                     handle_benchmark(dt)
                     minute_msg = \
                         self._get_minute_message(dt, algo, perf_tracker)
-
                     yield minute_msg
 
-        risk_message = perf_tracker.handle_simulation_end()
+            risk_message = perf_tracker.handle_simulation_end(
+                algo.data_portal,
+                calculate_expected_shortfall=algo.calculate_expected_shortfall,
+            )
         yield risk_message
 
     def _cleanup_expired_assets(self, dt, position_assets):
