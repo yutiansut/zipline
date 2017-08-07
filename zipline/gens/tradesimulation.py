@@ -298,7 +298,9 @@ class AlgorithmSimulator(object):
         Get a perf message for the given datetime.
         """
         perf_message = perf_tracker.handle_market_close(
-            dt, self.data_portal,
+            dt=dt,
+            data_portal=self.data_portal,
+            calculate_position_weights=algo.calculate_expected_shortfall,
         )
         perf_message['daily_perf']['recorded_vars'] = algo.recorded_vars
         return perf_message

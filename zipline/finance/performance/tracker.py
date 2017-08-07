@@ -367,7 +367,7 @@ class PerformanceTracker(object):
         minute_packet = self.to_dict(emission_type='minute')
         return minute_packet
 
-    def handle_market_close(self, dt, data_portal):
+    def handle_market_close(self, dt, data_portal, calculate_position_weights):
         """
         Handles the close of the given day, in both minute and daily emission.
         In daily emission, also updates performance, benchmark and risk metrics
@@ -400,18 +400,19 @@ class PerformanceTracker(object):
                 benchmark_value,
                 account.leverage)
 
-        portfolio = self.get_portfolio(performance_needs_update=False)
-        position_weights = portfolio.current_portfolio_weights()
+        if calculate_position_weights:
+            portfolio = self.get_portfolio(performance_needs_update=False)
+            position_weights = portfolio.current_portfolio_weights()
 
-        # For each day of the simulation, check to see if any futures were
-        # held. If so, convert them to continuous futures.
-        convert_futures = partial(
-            portfolio.asset_for_history_call, date=portfolio.current_date,
-        )
-        position_weights.index = list(
-            map(convert_futures, position_weights.index),
-        )
-        self.position_weights.append(dict(position_weights))
+            # For each day of the simulation, check to see if any futures were
+            # held. If so, convert them to continuous futures.
+            convert_futures = partial(
+                portfolio.asset_for_history_call, date=portfolio.current_date,
+            )
+            position_weights.index = list(
+                map(convert_futures, position_weights.index),
+            )
+            self.position_weights.append(dict(position_weights))
 
         # increment the day counter before we move markers forward.
         self.session_count += 1.0
