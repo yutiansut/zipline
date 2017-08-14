@@ -203,7 +203,9 @@ def calculate_results(sim_params,
         except KeyError:
             pass
 
-        msg = perf_tracker.handle_market_close(date, data_portal)
+        msg = perf_tracker.handle_market_close(
+            date, data_portal, calculate_position_weights=False,
+        )
         perf_tracker.position_tracker.sync_last_sale_prices(
             date, False, data_portal,
         )
