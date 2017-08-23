@@ -27,6 +27,8 @@ from zipline.testing.predicates import assert_equal
 from zipline.utils.cache import dataframe_cache
 from zipline.utils.paths import update_modified_time
 
+import gc
+
 
 # Otherwise the next line sometimes complains about being run too late.
 _multiprocess_can_split_ = False
@@ -81,3 +83,4 @@ class ExamplesTests(WithTmpDir, ZiplineTestCase):
             # datetime[ns, UTC]. We will just ignore the dtypes for now.
             check_dtype=False,
         )
+        gc.collect()
