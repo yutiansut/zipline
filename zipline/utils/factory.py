@@ -31,14 +31,16 @@ from zipline.utils.calendars import get_calendar
 from zipline.utils.input_validation import expect_types
 
 
-def create_simulation_parameters(year=2006, start=None, end=None,
+def create_simulation_parameters(year=2006,
+                                 start=None,
+                                 end=None,
                                  capital_base=float("1.0e5"),
                                  num_days=None,
                                  data_frequency='daily',
                                  emission_rate='daily',
                                  trading_calendar=None):
 
-    if trading_calendar is None:
+    if not trading_calendar:
         trading_calendar = get_calendar("NYSE")
     else:
         trading_calendar = get_calendar(trading_calendar)
