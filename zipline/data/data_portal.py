@@ -421,7 +421,7 @@ class DataPortal(object):
             asset, dt)
 
     @property
-    def first_day_of_data(self):
+    def first_available_session(self):
         return self._first_available_session
 
     @staticmethod

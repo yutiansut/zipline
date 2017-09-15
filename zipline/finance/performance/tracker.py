@@ -511,7 +511,7 @@ class PerformanceTracker(object):
         # available. Otherwise, use the full default number of lookback days.
         days_before_start = min(
             self.trading_calendar.session_distance(
-                data_portal.first_day_of_data, sim_params.start_session,
+                data_portal.first_available_session, sim_params.start_session,
             ),
             lookback_days,
         )

@@ -321,7 +321,7 @@ class Portfolio(object):
         # shortfall calculation will not be reliable, so instead of returning
         # NaN, raise an exception alerting the user that this method cannot be
         # called over the given simulation dates.
-        data_start = data_portal.first_day_of_data
+        data_start = data_portal.first_available_session
         num_days_of_data = calendar.session_distance(data_start, current_date)
         if num_days_of_data < lookback_days:
             suggested_start_date = data_start + (calendar.day * lookback_days)
