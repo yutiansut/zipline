@@ -1568,7 +1568,7 @@ class TestPortfolio(WithDataPortal, WithSimParams, ZiplineTestCase):
                 self.fail("Didn't expect a future after offset 0.")
 
             held_cf = cf_at_offset[expected_offset]
-            self.assertNotEqual(held_cf, 0.0)
+            self.assertNotEqual(positions[held_cf], 0.0)
             self.assertNotEqual(positions[equity_1], 0.0)
 
             other_cfs = list(set(cf_at_offset) - set([held_cf]))
